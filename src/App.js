@@ -2,11 +2,11 @@ import { Auth } from 'aws-amplify';
 import React, { useEffect, useState } from 'react';
 import { Nav, Navbar, NavItem } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from "react-router-dom";
 import './App.css';
 import Routes from './Routes';
 
-const App = () => {
+const App = (props) => {
   const [isAuthenticating, setIsAuthenticating] = useState(true);
   const [isAuthenticated, userHasAuthenticated] = useState(false);
 
@@ -29,6 +29,7 @@ const App = () => {
   async function handleLogout() {
     await Auth.signOut();
     userHasAuthenticated(false);
+    props.history.push("/login");
   }
 
   return (
@@ -64,4 +65,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default withRouter(App);
