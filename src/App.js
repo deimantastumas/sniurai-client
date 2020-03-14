@@ -2,11 +2,11 @@ import { Auth } from 'aws-amplify';
 import React, { useEffect, useState } from 'react';
 import { Nav, Navbar, NavItem } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-import { Link, withRouter } from "react-router-dom";
+import { Link, withRouter } from 'react-router-dom';
 import './App.css';
 import Routes from './Routes';
 
-const App = (props) => {
+const App = props => {
   const [isAuthenticating, setIsAuthenticating] = useState(true);
   const [isAuthenticated, userHasAuthenticated] = useState(false);
 
@@ -29,7 +29,7 @@ const App = (props) => {
   async function handleLogout() {
     await Auth.signOut();
     userHasAuthenticated(false);
-    props.history.push("/login");
+    props.history.push('/login');
   }
 
   return (
@@ -38,14 +38,19 @@ const App = (props) => {
         <Navbar fluid collapseOnSelect>
           <Navbar.Header>
             <Navbar.Brand>
-              <Link to="/">Šniūrai</Link>
+              <Link to="/">Scratch</Link>
             </Navbar.Brand>
             <Navbar.Toggle />
           </Navbar.Header>
           <Navbar.Collapse>
             <Nav pullRight>
               {isAuthenticated ? (
-                <NavItem onClick={handleLogout}>Logout</NavItem>
+                <>
+                  <LinkContainer to="/settings">
+                    <NavItem>Settings</NavItem>
+                  </LinkContainer>
+                  <NavItem onClick={handleLogout}>Logout</NavItem>
+                </>
               ) : (
                 <>
                   <LinkContainer to="/signup">
